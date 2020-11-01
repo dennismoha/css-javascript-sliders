@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="slider">
+        <div class="slide current">
+            <div class="content">
+                <h1>slide One</h1>
+                <p> first Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut ut amet ea praesentium voluptas consequatur fuga, quaerat vel officiis! Recusandae laboriosam enim delectus culpa aspernatur in voluptate distinctio aliquam rem?</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="content">
+                <h1>slide Two</h1>
+                <p>second Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut ut amet ea praesentium voluptas consequatur fuga, quaerat vel officiis! Recusandae laboriosam enim delectus culpa aspernatur in voluptate distinctio aliquam rem?</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="content">
+                <h1>slide Three</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut ut amet ea praesentium voluptas consequatur fuga, quaerat vel officiis! Recusandae laboriosam enim delectus culpa aspernatur in voluptate distinctio aliquam rem?</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="content">
+                <h1>slide Four</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut ut amet ea praesentium voluptas consequatur fuga, quaerat vel officiis! Recusandae laboriosam enim delectus culpa aspernatur in voluptate distinctio aliquam rem?</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="content">
+                <h1>slide Five</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut ut amet ea praesentium voluptas consequatur fuga, quaerat vel officiis! Recusandae laboriosam enim delectus culpa aspernatur in voluptate distinctio aliquam rem?</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="content">
+                <h1>slide Six</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut ut amet ea praesentium voluptas consequatur fuga, quaerat vel officiis! Recusandae laboriosam enim delectus culpa aspernatur in voluptate distinctio aliquam rem?</p>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button id="prev">
+                <i class="fa fa-arrow-left"></i>
+            </button>
+            <button id="next">
+                <i class="fa fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+
+    <script>
+        const slides = document.querySelectorAll('.slide'); //takes the whole slide class and treats it like an array
+        const next = document.querySelector('#next');
+        const prev = document.querySelector('#prev');
+        const auto = true; //helps it slide automatically
+        const intervalTime = 5000; //duration for sliding
+        let slideInterval;
+
+
+        const nextSlide = () => {
+            //grab the div with the class of current
+            const current = document.querySelector('.current');
+            //remove current class
+            current.classList.remove('current');
+            //check if there's next sibling since all class slides are siblings
+            if (current.nextElementSibling) {
+                //add current to next sibling
+                current.nextElementSibling.classList.add('current')
+            } else {
+                //add current to start
+                slides[0].classList.add('current')
+            }
+
+            //clear the previous class that had the current class
+            setTimeout(() => current.classList.remove('current'))
+
+        }
+
+        const prevSlide = () => {
+            //grab the div with the class of current
+            const current = document.querySelector('.current');
+            //remove current class
+            current.classList.remove('current');
+            //check if there's previous sibling since all class slides are siblings
+            if (current.previousElementSibling) {
+                //add current to the previous sibling
+                current.previousElementSibling.classList.add('current')
+            } else {
+                //add current to last
+                slides[slides.length - 1].classList.add('current')
+            }
+
+            setTimeout(() => current.classList.remove('current'))
+
+        }
+
+        function resetInterval() {
+            if (auto) {
+                clearInterval(slideInterval);
+                slideInterval = setInterval(nextSlide, intervalTime)
+
+            }
+        }
+
+        //add events
+        next.addEventListener('click', e => {
+            nextSlide();
+            resetInterval();
+        });
+
+        prev.addEventListener('click', e => {
+            prevSlide();
+            resetInterval();
+        })
+
+        //auto slide
+        if (auto) { //if auto is true
+            //run next slide at interval time
+            slideInterval = setInterval(nextSlide, intervalTime)
+        }
+    </script>
+
+</body>
+
+</html>
